@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  homebox-analytics:
+    build: .
+    container_name: homebox_analytics
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    volumes:
+      # Optional: Mount a local folder if you want to drop CSVs in directly
+      - ./data:/app/data
