@@ -5,3 +5,7 @@ __pycache__/
 # Environment
 .env
 venv/
+
+# Data
+*.csv
+data/
