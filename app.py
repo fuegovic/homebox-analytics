@@ -199,7 +199,7 @@ def render_detailed_tab(detail_data):
     st.markdown("### Business Assets & Special Buckets")
     special_cols = st.columns(3)
     special_cols[0].metric("Business Assets", f"${detail_data['business_assets_value']:,.2f}", f"{detail_data['business_assets_count']} items")
-    special_cols[1].metric("Junkagie Count", detail_data['junkagie_count'], f"${detail_data['junkagie_potential']:,.2f} potential")
+    special_cols[1].metric("Boite a Livres", detail_data['boite_livres_count'], f"${detail_data['boite_livres_potential']:,.2f} potential")
     special_cols[2].metric("Service Revenue Items", len(other_income_items))
 
     if business_assets:

@@ -75,7 +75,7 @@ def analyze_homebox_rows(rows, start_date, end_date):
         if purchase_date and is_in_range(purchase_date):
             loc = str(r.get('HB.location', '')).lower()
             # Exclude special buckets from general expenses
-            if not any(x in loc for x in ['nfs', 'other income', 'junkagie']):
+            if not any(x in loc for x in ['nfs', 'other income']):
                 business_items.append(r)
             
     total_business_expenses = sum(parse_float(item.get('HB.purchase_price', 0)) for item in business_items)
@@ -106,8 +106,8 @@ def analyze_homebox_rows(rows, start_date, end_date):
                 
     loss_value = sum(parse_float(item.get('HB.purchase_price', 0)) for item in loss_items)
     
-    junkagie_items = [r for r in rows if location_contains(r.get('HB.location', ''), 'Junkagie')]
-    junkagie_count = len(junkagie_items)
+    boite_items = [r for r in rows if location_contains(r.get('HB.location', ''), 'boite a livres')]
+    boite_livres_count = len(boite_items)
     
     # 6. Active Inventory & Stale Inventory
     # Must not be archived, must not be in special buckets
@@ -119,7 +119,7 @@ def analyze_homebox_rows(rows, start_date, end_date):
         if r.get('HB.archived') == 'true':
             continue
         loc = str(r.get('HB.location', '')).lower()
-        if any(x in loc for x in ['nfs', 'other income', 'junkagie', 'business assets']):
+        if any(x in loc for x in ['nfs', 'other income', 'business assets']):
             continue
         
         active_inventory.append(r)
@@ -182,8 +182,8 @@ def analyze_homebox_rows(rows, start_date, end_date):
         'business_assets': business_assets,
         'loss_value': loss_value,
         'loss_count': len(loss_items),
-        'junkagie_count': junkagie_count,
-        'junkagie_potential': junkagie_count * 5,
+        'boite_livres_count': boite_livres_count,
+        'boite_livres_potential': boite_livres_count * 5,
         'active_inventory_value': 0, # Deprecated specific check, using total_active
         'active_inventory_count': 0,
         'total_active_value': total_active_value,
